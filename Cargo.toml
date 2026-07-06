@@ -1,6 +1,6 @@
 [package]
 name = "bi83-kit"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "The official Plugin Development Kit (SDK) for the Bi83 Emulator"
 license = "MIT"

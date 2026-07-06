@@ -55,6 +55,28 @@ Sends a drawing command to the host emulator to render a rectangle over the game
   - `color`: The 32-bit color in `0xRRGGBBAA` format (e.g., Red is `0xFF0000FF`).
 * **Usage**: Useful for drawing hitboxes, custom plugin UIs, or highlighting objects on the screen.
 
+### `http_get(url: &str) -> String`
+Performs a synchronous HTTP GET request and returns the response body as a string.
+* **Usage**: Ideal for metadata scraping (e.g., IGDB, SteamGridDB) or checking for plugin updates.
+* **Example**: `let data = http_get("https://api.igdb.com/v4/games");`
+
+### `ui_notify(title: &str, body: &str)`
+Sends a push notification to the Bismuth Emulator UI.
+* **Usage**: Alerting the user when a macro is activated, or when metadata finishes downloading.
+* **Example**: `ui_notify("Scraper", "Successfully downloaded 5 covers");`
+
+### `storage_write(key: &str, value: &str)`
+Writes a string into the plugin's dedicated, persistent sandbox storage.
+* **Usage**: Saving user preferences, caching API tokens, or remembering last scrape timestamps.
+
+### `storage_read(key: &str) -> Option<String>`
+Reads a string from the plugin's storage.
+* **Returns**: `Some(String)` if the key exists, `None` otherwise.
+
+### `is_key_pressed(keycode: u32) -> bool`
+Checks if a specific physical key on the keyboard/controller is currently pressed.
+* **Usage**: Triggering cheat codes or speedrun timers via hotkeys.
+
 ## Best Practices
 
 1. **Performance**: Since `update` is called every frame (e.g., 60 times a second), avoid heavy computations, loops, or allocations inside it unless absolutely necessary.

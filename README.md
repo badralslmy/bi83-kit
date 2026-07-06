@@ -122,6 +122,11 @@ pub struct EmulatorState {
 - `read_ram(address: u32) -> u8`: Reads a byte directly from the emulator's memory space.
 - `write_ram(address: u32, value: u8)`: Writes a byte to the emulator's memory space.
 - `draw_rect(x: u32, y: u32, w: u32, h: u32, color: u32)`: Requests the host renderer to draw a rectangle overlay. Color format is `0xRRGGBBAA`.
+- `http_get(url: &str) -> String`: Performs a synchronous HTTP GET request.
+- `ui_notify(title: &str, body: &str)`: Triggers a notification in the Bismuth Emulator UI.
+- `storage_read(key: &str) -> Option<String>`: Reads a value from the plugin's isolated persistent storage.
+- `storage_write(key: &str, value: &str)`: Writes a value to the plugin's isolated persistent storage.
+- `is_key_pressed(keycode: u32) -> bool`: Checks if a specific physical key is currently pressed.
 
 📚 **For a complete list of APIs and advanced usage, read the [API Documentation](docs/API.md).**
 

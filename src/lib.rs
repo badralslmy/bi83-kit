@@ -16,6 +16,13 @@ unsafe extern "C" {
     fn host_read_ram(addr: u32) -> u32;
     fn host_write_ram(addr: u32, val: u32);
     fn host_draw_rect(x: u32, y: u32, w: u32, h: u32, color: u32);
+
+    // Ultimate API Expansion
+    fn host_http_get(url_ptr: u32, url_len: u32, out_ptr: u32, max_len: u32) -> u32;
+    fn host_ui_notify(title_ptr: u32, title_len: u32, body_ptr: u32, body_len: u32);
+    fn host_storage_write(k_ptr: u32, k_len: u32, v_ptr: u32, v_len: u32);
+    fn host_storage_read(k_ptr: u32, k_len: u32, out_ptr: u32, max_len: u32) -> u32;
+    fn host_get_key_state(keycode: u32) -> u32;
 }
 
 /// Logs a message to the host emulator console.
@@ -44,6 +51,68 @@ pub fn draw_rect(x: u32, y: u32, w: u32, h: u32, color: u32) {
     unsafe {
         host_draw_rect(x, y, w, h, color);
     }
+}
+
+/// Performs a synchronous HTTP GET request.
+pub fn http_get(url: &str) -> String {
+    let mut out_buf = vec![0u8; 1024 * 1024]; // 1MB buffer
+    unsafe {
+        let len = host_http_get(
+            url.as_ptr() as u32,
+            url.len() as u32,
+            out_buf.as_mut_ptr() as u32,
+            out_buf.len() as u32,
+        );
+        out_buf.set_len(len as usize);
+        String::from_utf8_lossy(&out_buf).into_owned()
+    }
+}
+
+/// Sends a UI Notification to the Host.
+pub fn ui_notify(title: &str, body: &str) {
+    unsafe {
+        host_ui_notify(
+            title.as_ptr() as u32,
+            title.len() as u32,
+            body.as_ptr() as u32,
+            body.len() as u32,
+        );
+    }
+}
+
+/// Writes a string to the plugin's persistent isolated storage.
+pub fn storage_write(key: &str, value: &str) {
+    unsafe {
+        host_storage_write(
+            key.as_ptr() as u32,
+            key.len() as u32,
+            value.as_ptr() as u32,
+            value.len() as u32,
+        );
+    }
+}
+
+/// Reads a string from the plugin's persistent isolated storage.
+pub fn storage_read(key: &str) -> Option<String> {
+    let mut out_buf = vec![0u8; 1024 * 64]; // 64KB max for a value
+    unsafe {
+        let len = host_storage_read(
+            key.as_ptr() as u32,
+            key.len() as u32,
+            out_buf.as_mut_ptr() as u32,
+            out_buf.len() as u32,
+        );
+        if len == 0 {
+            return None;
+        }
+        out_buf.set_len(len as usize);
+        Some(String::from_utf8_lossy(&out_buf).into_owned())
+    }
+}
+
+/// Checks if a given key is currently pressed on the host machine.
+pub fn is_key_pressed(keycode: u32) -> bool {
+    unsafe { host_get_key_state(keycode) != 0 }
 }
 
 // Memory allocation for the host to pass data

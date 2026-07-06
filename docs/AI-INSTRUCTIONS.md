@@ -28,6 +28,11 @@ When a user asks you to write a plugin for their emulator, you MUST strictly adh
      - `read_ram(addr: u32) -> u8`: For reading emulator RAM.
      - `write_ram(addr: u32, value: u8)`: For modifying emulator RAM (cheats, mods).
      - `draw_rect(x: u32, y: u32, w: u32, h: u32, color: u32)`: For rendering UI overlays (Color format: `0xRRGGBBAA`).
+     - `http_get(url: &str) -> String`: For synchronous REST API calls.
+     - `ui_notify(title: &str, body: &str)`: For triggering host UI toast notifications.
+     - `storage_read(key: &str) -> Option<String>`: For persistent key-value storage.
+     - `storage_write(key: &str, value: &str)`: For persistent key-value storage.
+     - `is_key_pressed(keycode: u32) -> bool`: For checking physical hardware keys.
 
 ## PERFECT PLUGIN TEMPLATE
 

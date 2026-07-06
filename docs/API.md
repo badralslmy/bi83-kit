@@ -1,6 +1,6 @@
 # Bi83-kit API Documentation
 
-Welcome to the comprehensive API documentation for the `Bi83-kit` SDK. This guide covers all the functions and structs exposed by the SDK to help you build powerful WebAssembly plugins for the Bi83 Emulator.
+Welcome to the comprehensive API documentation for the `Bi83-kit` SDK. This guide covers all the functions and structs exposed by the SDK to help you build powerful WebAssembly plugins for the Bismuth Emulator.
 
 ## Core Concepts
 

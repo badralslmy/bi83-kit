@@ -4,12 +4,12 @@
 
 # Bi83-kit 🚀
 
-**The Official Plugin Development Kit (SDK) for the Bi83 Emulator.**
+**The Official Plugin Development Kit (SDK) for the Bismuth Emulator.**
 
 [![Rust](https://img.shields.io/badge/Rust-1.70+-orange.svg)](https://www.rust-lang.org)
 [![WebAssembly](https://img.shields.io/badge/WebAssembly-WASM-blue.svg)](https://webassembly.org/)
 
-`Bi83-kit` is a powerful, zero-cost, and developer-friendly Rust SDK designed to build extremely fast WebAssembly plugins for the Bi83 Emulator. It hides all the complex FFI (Foreign Function Interface), memory allocations, and `unsafe` code behind a single elegant trait and macro.
+`Bi83-kit` is a powerful, zero-cost, and developer-friendly Rust SDK designed to build extremely fast WebAssembly plugins for the Bismuth Emulator. It hides all the complex FFI (Foreign Function Interface), memory allocations, and `unsafe` code behind a single elegant trait and macro.
 
 ## 🌟 Why Bi83-kit?
 
@@ -41,9 +41,16 @@ edition = "2021"
 [lib]
 crate-type = ["cdylib"]
 
+Run the following command to automatically configure your `Cargo.toml` with the latest version from GitHub:
+
+```bash
+cargo add bi83-kit --git https://github.com/badralslmy/bi83-kit
+```
+
+*Alternatively, manually add this to your `Cargo.toml`:*
+```toml
 [dependencies]
-# Pull directly from GitHub
-bi83-kit = { git = "https://github.com/YOUR_GITHUB_USERNAME/bi83-kit", branch = "main" }
+bi83-kit = { git = "https://github.com/badralslmy/bi83-kit", branch = "main" }
 ```
 
 ### 2. Write Your Plugin
@@ -58,7 +65,7 @@ struct MyAwesomePlugin;
 impl Plugin for MyAwesomePlugin {
     fn init() {
         // Called once when the plugin is loaded
-        log("MyAwesomePlugin has successfully initialized in the Bi83 Emulator!");
+        log("MyAwesomePlugin has successfully initialized in the Bismuth Emulator!");
     }
 
     fn update(state: &mut EmulatorState) {
@@ -94,7 +101,7 @@ cargo build --target wasm32-unknown-unknown --release
 Your compiled plugin will be available at:
 `target/wasm32-unknown-unknown/release/my_bi83_plugin.wasm`
 
-Load this file into the Bi83 Emulator and watch the magic happen! 🚀
+Load this file into the Bismuth Emulator and watch the magic happen! 🚀
 
 ---
 

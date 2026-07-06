@@ -1,7 +1,7 @@
 # Bi83-kit Plugin Generation Instructions for AI Agents
 
 **Target Audience:** LLMs, AI Coding Assistants, and Autonomous Agents.
-**Context:** The user is asking you to generate a WebAssembly plugin for the Bi83 Emulator. 
+**Context:** The user is asking you to generate a WebAssembly plugin for the Bismuth Emulator. 
 **SDK Name:** `bi83-kit` (version: `0.1.0`)
 
 When a user asks you to write a plugin for their emulator, you MUST strictly adhere to the following rules to ensure the generated Rust code compiles and runs efficiently using the `Bi83-kit` zero-cost abstraction SDK.
@@ -44,7 +44,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-bi83-kit = "0.1.0"
+bi83-kit = { git = "https://github.com/badralslmy/bi83-kit", branch = "main" }
 ```
 
 ```rust

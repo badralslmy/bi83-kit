@@ -122,10 +122,15 @@ pub struct EmulatorState {
 - `read_ram(address: u32) -> u8`: Reads a byte directly from the emulator's memory space.
 - `write_ram(address: u32, value: u8)`: Writes a byte to the emulator's memory space.
 - `draw_rect(x: u32, y: u32, w: u32, h: u32, color: u32)`: Requests the host renderer to draw a rectangle overlay. Color format is `0xRRGGBBAA`.
-- `http_get(url: &str) -> String`: Performs a synchronous HTTP GET request.
+- `http_request_async(url: &str, method: &str, headers: &str, body: Option<&[u8]>) -> u32`: Initiates a non-blocking asynchronous HTTP request.
+- `http_poll_response(req_id: u32) -> Option<Result<Vec<u8>, String>>`: Polls an async HTTP request status.
+- `ui_inject_html(id: &str, html: &str)`: Injects raw HTML into the Bismuth Emulator's Tauri-based web frontend.
+- `ui_remove_html(id: &str)`: Removes previously injected HTML by its ID.
 - `ui_notify(title: &str, body: &str)`: Triggers a notification in the Bismuth Emulator UI.
 - `storage_read(key: &str) -> Option<String>`: Reads a value from the plugin's isolated persistent storage.
 - `storage_write(key: &str, value: &str)`: Writes a value to the plugin's isolated persistent storage.
+- `storage_read_bin(key: &str) -> Option<Vec<u8>>`: Reads a binary payload (e.g. image bytes) from the plugin's persistent storage.
+- `storage_write_bin(key: &str, value: &[u8])`: Writes binary data to the plugin's persistent storage.
 - `is_key_pressed(keycode: u32) -> bool`: Checks if a specific physical key is currently pressed.
 
 📚 **For a complete list of APIs and advanced usage, read the [API Documentation](docs/API.md).**

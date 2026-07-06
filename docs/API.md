@@ -56,9 +56,30 @@ Sends a drawing command to the host emulator to render a rectangle over the game
 * **Usage**: Useful for drawing hitboxes, custom plugin UIs, or highlighting objects on the screen.
 
 ### `http_get(url: &str) -> String`
-Performs a synchronous HTTP GET request and returns the response body as a string.
-* **Usage**: Ideal for metadata scraping (e.g., IGDB, SteamGridDB) or checking for plugin updates.
-* **Example**: `let data = http_get("https://api.igdb.com/v4/games");`
+*(Legacy)* Performs a synchronous HTTP GET request and returns the response body as a string. Note: Synchronous calls may freeze the emulator. Prefer `http_request_async`.
+
+### `http_request_async(url: &str, method: &str, headers: &str, body: Option<&[u8]>) -> u32`
+Initiates a non-blocking asynchronous HTTP request. 
+* **Arguments**:
+  - `url` - The destination URL.
+  - `method` - HTTP method (e.g., `GET`, `POST`).
+  - `headers` - Newline-separated headers (e.g., `Client-ID: abc\nAuthorization: Bearer xyz`).
+  - `body` - Optional byte slice for request body.
+* **Returns**: A request ID (`u32`) to be used with `http_poll_response`.
+
+### `http_poll_response(req_id: u32) -> Option<Result<Vec<u8>, String>>`
+Polls the status of an asynchronous HTTP request.
+* **Returns**: 
+  - `None` if the request is still pending.
+  - `Some(Ok(Vec<u8>))` if the request succeeded.
+  - `Some(Err(String))` if the request failed.
+
+### `ui_inject_html(id: &str, html: &str)`
+Injects raw HTML into the Bismuth Emulator's Tauri-based web frontend.
+* **Usage**: Ideal for rendering rich UIs, banners, or images. The HTML will be rendered in an absolute overlay.
+
+### `ui_remove_html(id: &str)`
+Removes previously injected HTML from the UI using its unique `id`.
 
 ### `ui_notify(title: &str, body: &str)`
 Sends a push notification to the Bismuth Emulator UI.
@@ -72,6 +93,13 @@ Writes a string into the plugin's dedicated, persistent sandbox storage.
 ### `storage_read(key: &str) -> Option<String>`
 Reads a string from the plugin's storage.
 * **Returns**: `Some(String)` if the key exists, `None` otherwise.
+
+### `storage_write_bin(key: &str, value: &[u8])`
+Writes binary data (such as image bytes) directly to persistent storage.
+
+### `storage_read_bin(key: &str) -> Option<Vec<u8>>`
+Reads binary data from persistent storage.
+* **Returns**: `Some(Vec<u8>)` if the key exists, `None` otherwise.
 
 ### `is_key_pressed(keycode: u32) -> bool`
 Checks if a specific physical key on the keyboard/controller is currently pressed.

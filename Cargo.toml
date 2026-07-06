@@ -1,0 +1,13 @@
+[package]
+name = "bi83-kit"
+version = "0.1.0"
+edition = "2021"
+description = "The official Plugin Development Kit (SDK) for the Bi83 Emulator"
+license = "MIT"
+repository = "https://github.com/badralslmy/Bi83-kit"
+readme = "README.md"
+categories = ["wasm", "api-bindings", "game-engines"]
+keywords = ["emulator", "plugin", "wasm", "bi83"]
+
+[dependencies]
+bytemuck = { version = "1.16", features = ["derive"] }
